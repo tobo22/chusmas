@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chusmas</title>
+<style>
+    body {
+        transition: background-color 0.5s ease;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <input type="password" id="passwordInput" placeholder="Introduce la contraseña">
+        <button onclick="mostrarContraseña()">Mostrar Contraseña</button>
+        <button onclick="verificarContraseña()">Enviar</button>
+    </div>
+</div>
+
+<button onclick="abrirModal()">Cambiar Color</button>
+
+<script>
+var contraseñaCorrecta = "tobo";
+
+function abrirModal() {
+    var modal = document.getElementById("passwordModal");
+    modal.style.display = "block";
+}
+
+function cerrarModal() {
+    var modal = document.getElementById("passwordModal");
+    modal.style.display = "none";
+}
+
+function mostrarContraseña() {
+    var inputContraseña = document.getElementById("passwordInput");
+    if (inputContraseña.type === "password") {
+        inputContraseña.type = "text";
+    } else {
+        inputContraseña.type = "password";
+    }
+}
+
+function verificarContraseña() {
+    var contraseñaIngresada = document.getElementById("passwordInput").value;
+
+    if (contraseñaIngresada === contraseñaCorrecta) {
+        cambiarColor();
+        cerrarModal();
+    } else {
+        alert("solo tobo puede definir el estado, bueno es bastante obvio.");
+    }
+}
+
+function cambiarColor() {
+    var cuerpo = document.body;
+    var colorActual = cuerpo.style.backgroundColor;
+
+    // Si el color actual es verde, cambia a rojo; si es rojo, cambia a amarillo; de lo contrario, cambia a verde
+    if (colorActual === 'green' || colorActual === '') {
+        cuerpo.style.backgroundColor = 'red';
+        localStorage.setItem('colorFondo', 'red');
+    } else if (colorActual === 'red') {
+        cuerpo.style.backgroundColor = 'yellow';
+        localStorage.setItem('colorFondo', 'yellow');
+    } else {
+        cuerpo.style.backgroundColor = 'green';
+        localStorage.setItem('colorFondo', 'green');
+    }
+}
+
+// Cuando la página se carga, verifica si hay un color de fondo almacenado en localStorage
+window.onload = function() {
+    var colorFondo = localStorage.getItem('colorFondo');
+    if (colorFondo === 'red') {
+        document.body.style.backgroundColor = 'red';
+    } else if (colorFondo === 'yellow') {
+        document.body.style.backgroundColor = 'yellow';
+    }
+};
+</script>
+
+</body>
+</html>
+
+
